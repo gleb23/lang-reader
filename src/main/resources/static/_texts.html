@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+          integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+          crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function submitText() {
+        $.post('/upload-text', {text: $('#text').val()}, function(data) {
+            $('#text').val('');
+        });
+    };
+    function removeAllTexts() {
+        $.post('/remove-all-texts', function(data) {
+            console.log(data);
+        });
+    };
+    function search() {
+        var searchPhrase = $('#searchField').val();
+        $.get('/search', {searchPhrase: searchPhrase}, function(data) {
+            $resultsDiv = $("#results");
+            data.forEach(function(snippet) {
+                $("<p></p>").html(snippet).appendTo($resultsDiv);
+            })
+        })
+    }
+</script>
+<div id="submit-text">
+    <button onclick="submitText()">Upload Text</button>
+    <textarea name="text" id="text" rows="8" cols="50"></textarea>
+</div>
+<div>
+    <button onclick="removeAllTexts()">Remove all texts</button>
+</div>
+    <button onclick="search()">Search</button>
+    <input type="text" placeholder="search phrase" id="searchField"/>
+    <div id="results"></div>
+</div>
+</body>
+</html>

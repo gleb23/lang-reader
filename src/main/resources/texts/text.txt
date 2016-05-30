@@ -1,0 +1,5 @@
+This is slow and ugly in so many ways and I was hoping that someone knows of another way to achieve this.
+
+PS: I might consider running it as a browser extension, so if it doesn't sound possible with mere JS, and if you know a browser API that would allow that, feel free to mention it !
+
+A possible owrkaround would be to get the user to highlight the word instead of clicking it, but I would really love to be able to achieve the same thing with only a click !

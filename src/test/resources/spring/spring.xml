@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <bean id="placeholderConfigurer"
+         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+          <property name="location" value="app.properties"/>
+   </bean>
+
+   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+          <property name="driverClassName" value="${jdbc.driverClassName}"/>
+          <property name="url" value="${jdbc.url}"/>
+          <property name="username" value="${jdbc.username}"/>
+          <property name="password" value="${jdbc.password}"/>
+   </bean>
+
+   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+          <constructor-arg index="0" ref="dataSource"/>
+   </bean>
+
+   <bean id="databaseClient" class="com.marklogic.client.DatabaseClientFactory" factory-method="newClient">
+      <constructor-arg value="${marklogic.host}"/>
+      <constructor-arg value="${marklogic.port}"/>
+      <constructor-arg value="${marklogic.username}"/>
+      <constructor-arg value="${marklogic.password}"/>
+      <constructor-arg value="DIGEST"/>
+   </bean>
+
+    <bean id="markLogicTextDataSource" class="ua.hlibbabii.langreader.textsource.MarkLogicTextDataSource"/>
+
+    <bean id="textProcessor" class="ua.hlibbabii.langreader.textsource.TextProcessor"/>
+
+    <bean id="lemmatizer" class="ua.hlibbabii.langreader.text.NLPLemmatizer"/>
+
+    <bean id="textReader" class="ua.hlibbabii.langreader.dao.TextReader"/>
+</beans>
