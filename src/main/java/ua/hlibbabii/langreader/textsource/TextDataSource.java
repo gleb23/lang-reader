@@ -10,10 +10,16 @@ import java.util.Set;
  */
 public interface TextDataSource {
     String save(NormalizedText normalizedParagraph);
+
     NormalizedText getById(String id);
+
     Set<String> getAllTextIds();
+
     Set<String> getAllTextSnippets();
+
     long getNumberOfAvailableTexts();
+
     int removeAllTexts();
+
     List<String> search(String searchPhrase);
 }

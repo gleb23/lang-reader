@@ -18,8 +18,8 @@ public class TextView {
     public TextView() {
     }
 
-    public TextView(int textViewId, int userId, Date dateTime,
-                    String textId, NormalizedText normalizedText, int textNumber) {
+    public TextView(int textViewId, int userId, Date dateTime, String textId, NormalizedText normalizedText, int
+            textNumber) {
         this.textViewId = textViewId;
         this.userId = userId;
         this.dateTime = dateTime;
@@ -68,11 +68,11 @@ public class TextView {
         this.textId = textId;
     }
 
-    public void setTextNumber(int textNumber) {
-        this.textNumber = textNumber;
-    }
-
     public int getTextNumber() {
         return textNumber;
+    }
+
+    public void setTextNumber(int textNumber) {
+        this.textNumber = textNumber;
     }
 }

@@ -15,22 +15,18 @@ import java.util.stream.Collectors;
 @Service
 public class TextRating {
 
+    private static int c = 0;
     @Autowired
     private TextDataSource textDataSource;
-
     private List<TextInfo> textInfoList;
 
     @PostConstruct
     public void init() {
-        textInfoList = textDataSource.getAllTextIds().stream()
-                .map(id -> new TextInfo(id))
-                .collect(Collectors.toList());
+        textInfoList = textDataSource.getAllTextIds().stream().map(id -> new TextInfo(id)).collect(Collectors.toList());
         System.out.println(textInfoList);
     }
 
     public TextInfo getFirst(int userId) {
         return textInfoList.get(c++ % textInfoList.size());
     }
-    
-    private static int c = 0;
 }

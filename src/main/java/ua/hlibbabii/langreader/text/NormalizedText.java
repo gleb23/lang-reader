@@ -34,9 +34,9 @@ public class NormalizedText {
 
     public Collection<String> getAllNormilizedWords() {
         Collection<String> wordsFromAllParagraph = paragraphs.stream()
-                .map(p -> p.getAllNormilizedWords())
-                .flatMap(p -> p.stream())
-                .collect(Collectors.toList());
+                                                             .map(p -> p.getAllNormilizedWords())
+                                                             .flatMap(p -> p.stream())
+                                                             .collect(Collectors.toList());
         if (caption != null) {
             wordsFromAllParagraph.addAll(caption.getAllNormilizedWords());
         }

@@ -13,7 +13,12 @@ import ua.hlibbabii.langreader.words.WordStatistics;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hlib on 27.05.16.
@@ -39,7 +44,8 @@ public class TextAnalyzer {
         Map<String, MultiSet<Integer>> allWordsWithTextViews = new HashMap<>();
         for (TextView textView : allTextViews) {
             int textViewId = textView.getTextViewId();
-            Collection<String> allNormilizedWordsCount = textDataSource.getById(textView.getTextId()).getAllNormilizedWords();
+            Collection<String> allNormilizedWordsCount = textDataSource.getById(textView.getTextId())
+                                                                       .getAllNormilizedWords();
             for (String word : allNormilizedWordsCount) {
                 MultiSet<Integer> textViewIdMultiSet = allWordsWithTextViews.get(word);
                 if (textViewIdMultiSet == null) {
@@ -70,19 +76,17 @@ public class TextAnalyzer {
             wordStatistics.setNormalizedForm(word);
             for (Integer textViewId : textViewsWithWord.uniqueSet()) {
                 TextView textView = allTextViews.get(textViewId);
-                wordStatistics.addWordOccurrence(
-                        convertDateToZonedDateTime(textView.getDateTime()),
-                        !textViewIdsWithUnknownWord.contains(textViewId),
-                        textView.getTextNumber(),
-                        textViewsWithWord.getCount(textViewId)
-                );
+                wordStatistics.addWordOccurrence(convertDateToZonedDateTime(textView.getDateTime()),
+                        !textViewIdsWithUnknownWord
+                                .contains(textViewId), textView.getTextNumber(), textViewsWithWord.getCount
+                                (textViewId));
             }
             userDictionary.add(wordStatistics);
         }
         userDictionary.setUserId(userId);
         return userDictionary;
     }
-    
+
     private ZonedDateTime convertDateToZonedDateTime(Date date) {
         return ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }

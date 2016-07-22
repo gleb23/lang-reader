@@ -46,7 +46,8 @@ public class MarkLogicTextDataSource implements TextDataSource {
         JsonElement normalizedTextJson = new Gson().toJsonTree(normalizedParagraph, NormalizedText.class);
         DocumentUriTemplate documentUriTemplate = jsonDocumentManager.newDocumentUriTemplate("json");
         documentUriTemplate.setDirectory("/texts/");
-        DocumentDescriptor documentDescriptor = jsonDocumentManager.create(documentUriTemplate, new GSONHandle(normalizedTextJson));
+        DocumentDescriptor documentDescriptor = jsonDocumentManager.create(documentUriTemplate, new GSONHandle
+                (normalizedTextJson));
         return documentDescriptor.getUri();
     }
 
@@ -61,17 +62,20 @@ public class MarkLogicTextDataSource implements TextDataSource {
     @Override
     public Set<String> getAllTextIds() {
         StructuredQueryBuilder structuredQueryBuilder = queryManager.newStructuredQueryBuilder();
-        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new SearchHandle());
-        return Arrays.asList(searchHandle.getMatchResults()).stream().map(m -> m.getUri())
-                .collect(Collectors.toSet());
+        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new
+                SearchHandle());
+        return Arrays.asList(searchHandle.getMatchResults()).stream().map(m -> m.getUri()).collect(Collectors.toSet());
     }
 
     @Override
     public Set<String> getAllTextSnippets() {
         StructuredQueryBuilder structuredQueryBuilder = queryManager.newStructuredQueryBuilder();
-        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new SearchHandle());
-        return Arrays.asList(searchHandle.getMatchResults()).stream().map(m -> m.getFirstSnippetText())
-                .collect(Collectors.toSet());
+        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new
+                SearchHandle());
+        return Arrays.asList(searchHandle.getMatchResults())
+                     .stream()
+                     .map(m -> m.getFirstSnippetText())
+                     .collect(Collectors.toSet());
     }
 
 
@@ -86,23 +90,24 @@ public class MarkLogicTextDataSource implements TextDataSource {
     @Override
     public int removeAllTexts() {
         StructuredQueryBuilder structuredQueryBuilder = queryManager.newStructuredQueryBuilder();
-        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new SearchHandle());
+        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new
+                SearchHandle());
         int textsToRemove = searchHandle.getMatchResults().length;
-        Arrays.asList(searchHandle.getMatchResults()).stream().forEach(
-                m -> jsonDocumentManager.delete(m.getUri())
-        );
+        Arrays.asList(searchHandle.getMatchResults()).stream().forEach(m -> jsonDocumentManager.delete(m.getUri()));
         return textsToRemove;
     }
 
     @Override
     public List<String> search(String searchPhrase) {
         StructuredQueryBuilder structuredQueryBuilder = queryManager.newStructuredQueryBuilder();
-        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new SearchHandle());
-        List<String> snippets = Arrays.asList(searchHandle.getMatchResults()).stream()
-                .map(m -> m.getSnippets())
-                .flatMap(m -> Arrays.asList(m).stream())
-                .map(m -> m.getTextContent())
-                .collect(Collectors.toList());
+        SearchHandle searchHandle = queryManager.search(structuredQueryBuilder.directory(true, "/texts/"), new
+                SearchHandle());
+        List<String> snippets = Arrays.asList(searchHandle.getMatchResults())
+                                      .stream()
+                                      .map(m -> m.getSnippets())
+                                      .flatMap(m -> Arrays.asList(m).stream())
+                                      .map(m -> m.getTextContent())
+                                      .collect(Collectors.toList());
         return snippets;
     }
 }

@@ -1,6 +1,10 @@
 package ua.hlibbabii.langreader.words;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -25,21 +29,14 @@ public class UserDictionary {
         return "UserDictionary{" +
                 "userId=" + userId +
                 "\n" +
-                wordToStatisticsMap.values().stream().map(w -> w.toString() + "\n")
-                .collect(Collectors.toList())
-                + '}';
+                wordToStatisticsMap.values().stream().map(w -> w.toString() + "\n").collect(Collectors.toList()) + '}';
     }
 
     public String toStringSortedByFrequency() {
         List<WordStatistics> wordStatisticsList = new ArrayList<>(wordToStatisticsMap.values());
-        Collections.sort(
-                wordStatisticsList,
-                new WordStatisticsFrequencyComparator()
-        );
+        Collections.sort(wordStatisticsList, new WordStatisticsFrequencyComparator());
         return "UserDictionary{" +
                 "userId=" + userId +
-                "\n" + wordStatisticsList.stream().map(w -> w.toString() + "\n")
-                        .collect(Collectors.toList())
-                + '}';
+                "\n" + wordStatisticsList.stream().map(w -> w.toString() + "\n").collect(Collectors.toList()) + '}';
     }
 }

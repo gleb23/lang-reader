@@ -29,18 +29,23 @@ public class TextController {
     }
 
     @RequestMapping(value = "/upload-text", method = RequestMethod.POST)
-    public @ResponseBody void uploadText(@RequestParam String text) {
+    public
+    @ResponseBody
+    void uploadText(@RequestParam String text) {
         textProcessor.processText(text);
     }
 
     @RequestMapping(value = "/remove-all-texts", method = RequestMethod.POST)
-    public @ResponseBody int removeAllTexts() {
+    public
+    @ResponseBody
+    int removeAllTexts() {
         return textDataSource.removeAllTexts();
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public @ResponseBody
+    public
+    @ResponseBody
     List<String> searh(@RequestParam String searchPhrase) {
-         return textDataSource.search(searchPhrase);
+        return textDataSource.search(searchPhrase);
     }
 }

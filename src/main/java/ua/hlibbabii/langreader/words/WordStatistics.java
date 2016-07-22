@@ -14,32 +14,6 @@ public class WordStatistics {
     private Optional<KnowledgeRate> initialKnowledgeRate = Optional.empty();
     private List<WordOccurrence> wordOccurrences = new ArrayList<>();
 
-    private static class WordOccurrence {
-        private ZonedDateTime dateTime;
-        private boolean known;
-        private int textNumber;
-        private int wordOccurrencesInText;
-
-        public WordOccurrence(ZonedDateTime dateTime, boolean known, int textNumber,
-                                int wordOccurrencesInText) {
-            this.dateTime = dateTime;
-            this.known = known;
-            this.textNumber = textNumber;
-            this.wordOccurrencesInText = wordOccurrencesInText;
-        }
-
-        @Override
-        public String toString() {
-            String hoursAgo = String.valueOf(ChronoUnit.MINUTES.between(
-                    dateTime, ZonedDateTime.now()));
-            if (!known) {
-                hoursAgo = "!!! " + hoursAgo + " !!!";
-            }
-            hoursAgo += " [" + wordOccurrencesInText + "]";
-            return hoursAgo;
-        }
-    }
-
     public String getNormalizedForm() {
         return normalizedForm;
     }
@@ -48,8 +22,7 @@ public class WordStatistics {
         this.normalizedForm = normalizedForm;
     }
 
-    public void addWordOccurrence(ZonedDateTime dateTime, boolean known
-                                , int textNumber, int wordOccurencesInText) {
+    public void addWordOccurrence(ZonedDateTime dateTime, boolean known, int textNumber, int wordOccurencesInText) {
         wordOccurrences.add(new WordOccurrence(dateTime, known, textNumber, wordOccurencesInText));
     }
 
@@ -67,16 +40,40 @@ public class WordStatistics {
     }
 
     private WordOccurrence getLastWordOccurrence() {
-        return wordOccurrences.get(wordOccurrences.size() -1);
+        return wordOccurrences.get(wordOccurrences.size() - 1);
     }
 
     public double getPercentOfTextsWordAppears() {
         WordOccurrence lastWordOccurrence = getLastWordOccurrence();
-        return (double)wordOccurrences.size() / lastWordOccurrence.textNumber;
+        return (double) wordOccurrences.size() / lastWordOccurrence.textNumber;
     }
 
     public int getNearestNextDesiredTextNumberWithThisWord() {
         // get next number based on several last occurences
         return 100;
+    }
+
+    private static class WordOccurrence {
+        private ZonedDateTime dateTime;
+        private boolean known;
+        private int textNumber;
+        private int wordOccurrencesInText;
+
+        public WordOccurrence(ZonedDateTime dateTime, boolean known, int textNumber, int wordOccurrencesInText) {
+            this.dateTime = dateTime;
+            this.known = known;
+            this.textNumber = textNumber;
+            this.wordOccurrencesInText = wordOccurrencesInText;
+        }
+
+        @Override
+        public String toString() {
+            String hoursAgo = String.valueOf(ChronoUnit.MINUTES.between(dateTime, ZonedDateTime.now()));
+            if (!known) {
+                hoursAgo = "!!! " + hoursAgo + " !!!";
+            }
+            hoursAgo += " [" + wordOccurrencesInText + "]";
+            return hoursAgo;
+        }
     }
 }

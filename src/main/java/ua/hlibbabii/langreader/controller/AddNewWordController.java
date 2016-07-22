@@ -1,7 +1,11 @@
 package ua.hlibbabii.langreader.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ua.hlibbabii.langreader.dao.Dao;
 import ua.hlibbabii.langreader.dao.TextReader;
 import ua.hlibbabii.langreader.service.TextAnalyzer;
@@ -18,24 +22,19 @@ import java.util.Date;
 public class AddNewWordController {
 
     private static int nextTextViewId = 1000;
+    private int userId = 1;
+    @Autowired
+    private Dao dao;
+    @Autowired
+    private TextReader textReader;
+    @Autowired
+    private TextAnalyzer textAnalyzer;
+    @Autowired
+    private TextDataSource textDataSource;
 
     private int getNextTextViewId() {
         return nextTextViewId++;
     }
-
-    private int userId = 1;
-
-    @Autowired
-    private Dao dao;
-
-    @Autowired
-    private TextReader textReader;
-
-    @Autowired
-    private TextAnalyzer textAnalyzer;
-
-    @Autowired
-    private TextDataSource textDataSource;
 
     @RequestMapping(value = "/{textViewId}/newword", method = RequestMethod.POST)
     public void addNewWord(@PathVariable String textViewId, @RequestParam String normalized) {

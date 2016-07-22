@@ -8,27 +8,27 @@ package ua.hlibbabii.langreader.text;
  * @see <a href="ftp://ftp.cis.upenn.edu/pub/treebank/doc/tagguide.ps.gz">Penn Treebank Specification</a>
  */
 public enum PartOfSpeech {
-    ADJECTIVE( "JJ" ),
-    ADJECTIVE_COMPARATIVE( ADJECTIVE + "R" ),
-    ADJECTIVE_SUPERLATIVE( ADJECTIVE + "S" ),
+    ADJECTIVE("JJ"),
+    ADJECTIVE_COMPARATIVE(ADJECTIVE + "R"),
+    ADJECTIVE_SUPERLATIVE(ADJECTIVE + "S"),
 
     /* This category includes most words that end in -ly as well as degree
      * words like quite, too and very, posthead modi ers like enough and
      * indeed (as in good enough, very well indeed), and negative markers like
      * not, n't and never.
      */
-    ADVERB( "RB" ),
+    ADVERB("RB"),
 
     /* Adverbs with the comparative ending -er but without a strictly comparative
      * meaning, like <i>later</i> in <i>We can always come by later</i>, should
      * simply be tagged as RB.
      */
-    ADVERB_COMPARATIVE( ADVERB + "R" ),
-    ADVERB_SUPERLATIVE( ADVERB + "S" ),
+    ADVERB_COMPARATIVE(ADVERB + "R"),
+    ADVERB_SUPERLATIVE(ADVERB + "S"),
 
     /* This category includes how, where, why, etc.
      */
-    ADVERB_WH( "W" + ADVERB ),
+    ADVERB_WH("W" + ADVERB),
 
     /* This category includes and, but, nor, or, yet (as in Y et it's cheap,
      * cheap yet good), as well as the mathematical operators plus, minus, less,
@@ -36,40 +36,40 @@ public enum PartOfSpeech {
      * by"), when they are spelled out. <i>For</i> in the sense of "because" is
      * a coordinating conjunction (CC) rather than a subordinating conjunction.
      */
-    CONJUNCTION_COORDINATING( "CC" ),
-    CONJUNCTION_SUBORDINATING( "IN" ),
-    CARDINAL_NUMBER( "CD" ),
-    DETERMINER( "DT" ),
+    CONJUNCTION_COORDINATING("CC"),
+    CONJUNCTION_SUBORDINATING("IN"),
+    CARDINAL_NUMBER("CD"),
+    DETERMINER("DT"),
 
     /* This category includes which, as well as that when it is used as a
      * relative pronoun.
      */
-    DETERMINER_WH( "W" + DETERMINER ),
-    EXISTENTIAL_THERE( "EX" ),
-    FOREIGN_WORD( "FW" ),
+    DETERMINER_WH("W" + DETERMINER),
+    EXISTENTIAL_THERE("EX"),
+    FOREIGN_WORD("FW"),
 
-    LIST_ITEM_MARKER( "LS" ),
+    LIST_ITEM_MARKER("LS"),
 
-    NOUN( "NN" ),
-    NOUN_PLURAL( NOUN + "S" ),
-    NOUN_PROPER_SINGULAR( NOUN + "P" ),
-    NOUN_PROPER_PLURAL( NOUN + "PS" ),
+    NOUN("NN"),
+    NOUN_PLURAL(NOUN + "S"),
+    NOUN_PROPER_SINGULAR(NOUN + "P"),
+    NOUN_PROPER_PLURAL(NOUN + "PS"),
 
-    PREDETERMINER( "PDT" ),
-    POSSESSIVE_ENDING( "POS" ),
+    PREDETERMINER("PDT"),
+    POSSESSIVE_ENDING("POS"),
 
-    PRONOUN_PERSONAL( "PRP" ),
-    PRONOUN_POSSESSIVE( "PRP$" ),
+    PRONOUN_PERSONAL("PRP"),
+    PRONOUN_POSSESSIVE("PRP$"),
 
     /* This category includes the wh-word whose.
      */
-    PRONOUN_POSSESSIVE_WH( "WP$" ),
+    PRONOUN_POSSESSIVE_WH("WP$"),
 
     /* This category includes what, who and whom.
      */
-    PRONOUN_WH( "WP" ),
+    PRONOUN_WH("WP"),
 
-    PARTICLE( "RP" ),
+    PARTICLE("RP"),
 
     /* This tag should be used for mathematical, scientific and technical symbols
      * or expressions that aren't English words. It should not used for any and
@@ -77,26 +77,26 @@ public enum PartOfSpeech {
      * measurements (including abbreviations thereof) and the like should be
      * tagged as nouns.
      */
-    SYMBOL( "SYM" ),
-    TO( "TO" ),
+    SYMBOL("SYM"),
+    TO("TO"),
 
     /* This category includes my (as in M y, what a gorgeous day), oh, please,
      * see (as in See, it's like this), uh, well and yes, among others.
      */
-    INTERJECTION( "UH" ),
+    INTERJECTION("UH"),
 
-    VERB( "VB" ),
-    VERB_PAST_TENSE( VERB + "D" ),
-    VERB_PARTICIPLE_PRESENT( VERB + "G" ),
-    VERB_PARTICIPLE_PAST( VERB + "N" ),
-    VERB_SINGULAR_PRESENT_NONTHIRD_PERSON( VERB + "P" ),
-    VERB_SINGULAR_PRESENT_THIRD_PERSON( VERB + "Z" ),
+    VERB("VB"),
+    VERB_PAST_TENSE(VERB + "D"),
+    VERB_PARTICIPLE_PRESENT(VERB + "G"),
+    VERB_PARTICIPLE_PAST(VERB + "N"),
+    VERB_SINGULAR_PRESENT_NONTHIRD_PERSON(VERB + "P"),
+    VERB_SINGULAR_PRESENT_THIRD_PERSON(VERB + "Z"),
 
     /* This category includes all verbs that don't take an -s ending in the
      * third person singular present: can, could, (dare), may, might, must,
      * ought, shall, should, will, would.
      */
-    VERB_MODAL( "MD" ),
+    VERB_MODAL("MD"),
 
     /* Stanford.
      */
@@ -107,13 +107,24 @@ public enum PartOfSpeech {
     OPENING_PARANTHESIS("-LRB-"),
     CLOSING_PARANTHESIS("-RRB-"),
     COMMA(","),
-    SENTENCE_TERMINATOR( "." ),
+    SENTENCE_TERMINATOR("."),
     SENTENCE_SEPARATOR(":");
 
     private final String tag;
 
-    private PartOfSpeech( String tag ) {
+    private PartOfSpeech(String tag) {
         this.tag = tag;
+    }
+
+    public static PartOfSpeech get(String value) {
+        PartOfSpeech[] values = values();
+        for (PartOfSpeech v : values) {
+            if (value.equals(v.getTag())) {
+                return v;
+            }
+        }
+
+        throw new IllegalArgumentException("Unknown part of speech: '" + value + "'.");
     }
 
     /**
@@ -132,16 +143,5 @@ public enum PartOfSpeech {
 
     protected String getTag() {
         return tag;
-    }
-
-    public static PartOfSpeech get( String value ) {
-        PartOfSpeech[] values = values();
-        for( PartOfSpeech v : values) {
-            if( value.equals( v.getTag() ) ) {
-                return v;
-            }
-        }
-
-        throw new IllegalArgumentException( "Unknown part of speech: '" + value + "'." );
     }
 }

@@ -2,7 +2,11 @@ package ua.hlibbabii.langreader.text;
 
 import com.google.gson.Gson;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hlib on 03.04.16.

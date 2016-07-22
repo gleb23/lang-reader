@@ -21,25 +21,16 @@ public class NLPLemmatizer implements Lemmatizer {
 
     private final static Logger logger = Logger.getLogger(NLPLemmatizer.class);
 
-    private final static String STANFORD_NLP_BASE_PATH = "/home/hlib/dev/js/langreader/langreader-java-rest/src/main/thirdParty/";
+    private final static String STANFORD_NLP_BASE_PATH =
+            "/home/hlib/dev/js/langreader/langreader-java-rest/src/main/thirdParty/";
 
     private static final int MAXIMUM_STRING_SIZE_TO_BE_A_CAPTION = 60;
 
-    private final List<PartOfSpeech> nonLearnablePosList = Arrays.asList(
-            PartOfSpeech.FOREIGN_WORD,
-            PartOfSpeech.LIST_ITEM_MARKER,
-            PartOfSpeech.NOUN_PROPER_PLURAL,
-            PartOfSpeech.NOUN_PROPER_SINGULAR,
-            PartOfSpeech.HASH,
-            PartOfSpeech.DOLLAR_SIGN,
-            PartOfSpeech.OPENING_QUOTE,
-            PartOfSpeech.CLOSING_QUOTE,
-            PartOfSpeech.OPENING_PARANTHESIS,
-            PartOfSpeech.CLOSING_PARANTHESIS,
-            PartOfSpeech.COMMA,
-            PartOfSpeech.SENTENCE_TERMINATOR,
-            PartOfSpeech.SENTENCE_SEPARATOR
-    );
+    private final List<PartOfSpeech> nonLearnablePosList = Arrays.asList(PartOfSpeech.FOREIGN_WORD, PartOfSpeech
+            .LIST_ITEM_MARKER, PartOfSpeech.NOUN_PROPER_PLURAL, PartOfSpeech.NOUN_PROPER_SINGULAR, PartOfSpeech.HASH,
+            PartOfSpeech.DOLLAR_SIGN, PartOfSpeech.OPENING_QUOTE, PartOfSpeech.CLOSING_QUOTE, PartOfSpeech
+                    .OPENING_PARANTHESIS, PartOfSpeech.CLOSING_PARANTHESIS, PartOfSpeech.COMMA, PartOfSpeech
+                    .SENTENCE_TERMINATOR, PartOfSpeech.SENTENCE_SEPARATOR);
 
     private StanfordCoreNLP stanfordCoreNLP;
 
@@ -50,7 +41,8 @@ public class NLPLemmatizer implements Lemmatizer {
     public void init() {
         Properties props = new Properties();
         props.put("annotators", "tokenize, ssplit, pos, lemma, parse");
-        props.put("pos.model", STANFORD_NLP_BASE_PATH + "edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger");
+        props.put("pos.model", STANFORD_NLP_BASE_PATH +
+                "edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger");
         props.put("parse.model", STANFORD_NLP_BASE_PATH + "edu/stanford/nlp/models/lexparser/englishPCFG.ser.gz");
         this.stanfordCoreNLP = new StanfordCoreNLP(props);
     }
@@ -61,8 +53,8 @@ public class NLPLemmatizer implements Lemmatizer {
 
         List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
         NormalizedParagraph normalizedParagraph = new NormalizedParagraph();
-        for(CoreMap sentence: sentences) {
-            for (CoreLabel token: sentence.get(CoreAnnotations.TokensAnnotation.class)) {
+        for (CoreMap sentence : sentences) {
+            for (CoreLabel token : sentence.get(CoreAnnotations.TokensAnnotation.class)) {
                 String originalText = token.originalText();
                 try {
                     PartOfSpeech pos = PartOfSpeech.get(token.tag());
@@ -73,7 +65,7 @@ public class NLPLemmatizer implements Lemmatizer {
                         normalizedParagraph.addLearnableWord(originalText, lemma);
                     }
                 } catch (Exception ex) {
-                    logger.error("Uknown POS (" + token.tag() + ") for \"" + originalText  + "\"");
+                    logger.error("Uknown POS (" + token.tag() + ") for \"" + originalText + "\"");
                     normalizedParagraph.addUnlearnableText(originalText);
                 }
             }

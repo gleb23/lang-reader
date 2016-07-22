@@ -18,7 +18,7 @@ public class TextReader {
 
     public String getText(String textId) throws TextRepositoryException {
         try {
-            String text = IOUtils.toString(new FileInputStream(textDirectory + "/" +textId));
+            String text = IOUtils.toString(new FileInputStream(textDirectory + "/" + textId));
             return text;
         } catch (IOException e) {
             throw new TextRepositoryException("Can't get text with textId: " + textId, e);
