@@ -10,6 +10,7 @@
 1. Start MarkLogic: sudo /etc/init.d/MarkLogic start
 1. Go to localhost:8001 and do initial ML setup
 1. Go to http://localhost:8001/ and create ML database
+1. Create ML rest-api instance https://docs.marklogic.com/guide/rest-dev/service#id_12021
 
 ## Setup Mysql server
 1. Install MySql server
