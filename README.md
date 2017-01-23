@@ -15,3 +15,6 @@
 ## Setup Mysql server
 1. Install MySql server
 2. Run lerner.sql
+
+## Add texts to the db  
+TBD
