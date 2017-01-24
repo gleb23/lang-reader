@@ -89,8 +89,7 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-CREATE USER IF NOT EXISTS 'langreader' IDENTIFIED BY 'langreader';
-GRANT ALL ON langreader.* TO 'langreader';
+grant all privileges on langreader.* to langreader@localhost identified by 'langreader';
 
 -- Run statement below only for single use mode during development
 INSERT INTO USER (userId, NAME, initLevel) VALUES (1, "HLIB", "ADVANCED");
