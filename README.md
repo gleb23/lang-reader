@@ -13,13 +13,14 @@
 1. Create a forest and assign it to the created database
 1. Create ML rest-api instance https://docs.marklogic.com/guide/rest-dev/service#id_12021
 
-## Setup Mysql server
+### Setup Mysql server
 1. Install MySql server
 2. Run lerner.sql
 
-## Add texts to the db  
-TBD
+### Add texts to the db  
+1. go to http://localhost:8080/texts and manually upload texts from src/main/resources/corpus 
+
+## What is done
 
 ## TO-DO List (in decreasing priority order):
 1. Automate text adition
-
