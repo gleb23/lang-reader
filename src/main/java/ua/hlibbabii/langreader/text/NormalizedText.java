@@ -1,5 +1,7 @@
 package ua.hlibbabii.langreader.text;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,5 +43,9 @@ public class NormalizedText {
             wordsFromAllParagraph.addAll(caption.getAllNormilizedWords());
         }
         return wordsFromAllParagraph;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this, this.getClass());
     }
 }
