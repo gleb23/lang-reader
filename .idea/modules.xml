@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/lang-reader.iml" filepath="$PROJECT_DIR$/lang-reader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lang-reader.iml" filepath="$PROJECT_DIR$/.idea/modules/lang-reader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lang-reader_main.iml" filepath="$PROJECT_DIR$/.idea/modules/lang-reader_main.iml" group="lang-reader" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lang-reader_test.iml" filepath="$PROJECT_DIR$/.idea/modules/lang-reader_test.iml" group="lang-reader" />
     </modules>
   </component>
 </project>
