@@ -1,11 +1,7 @@
 package ua.hlibbabii.langreader.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.hlibbabii.langreader.dao.Dao;
 import ua.hlibbabii.langreader.dao.TextReader;
 import ua.hlibbabii.langreader.service.TextAnalyzer;
@@ -49,10 +45,10 @@ public class AddNewWordController {
             if (textId == null) {
                 throw new IllegalStateException("No text found");
             }
-            NormalizedText normalizedParagraph = textDataSource.getById(textId);
+            NormalizedText normalizedText = textDataSource.getById(textId);
             Date timestamp = new Date();
             int nextTextViewId = dao.addTextView(textId, userId, timestamp);
-            return new TextView(nextTextViewId, userId, timestamp, null, normalizedParagraph, 0);
+            return new TextView(nextTextViewId, userId, timestamp, null, normalizedText, 0);
         } catch (Exception e) {
             throw new RuntimeException(e); //TODO pass error to the client
         }
