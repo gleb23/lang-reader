@@ -26,4 +26,5 @@
 1. Fix Existing unit-tests. +
 1. Write uni-tests for TextAnalyzer
 1. Simplify methods in TextAnalyzer
+1. Use java 8 time instead of java.util.Date
 1. Automate text adition
