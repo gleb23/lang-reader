@@ -13,6 +13,8 @@ public class TextView {
 
     /* transient fields, they can be restored from datasource */
     private NormalizedText normalizedText;
+
+    //TODO what is textNumber ??
     private int textNumber;
 
     public TextView() {
