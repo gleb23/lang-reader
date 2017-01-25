@@ -31,7 +31,7 @@ public class WordStatistics {
         return "WordStatistics{" +
                 "normalizedForm='" + normalizedForm + '\'' +
                 ", initialKnowledgeRate=" + initialKnowledgeRate +
-                ", " + wordOccurrences +
+                ", occurences: " + wordOccurrences +
                 '}';
     }
 
@@ -69,10 +69,11 @@ public class WordStatistics {
         @Override
         public String toString() {
             String hoursAgo = String.valueOf(ChronoUnit.MINUTES.between(dateTime, ZonedDateTime.now()));
+            hoursAgo = hoursAgo + " hrs ago";
             if (!known) {
-                hoursAgo = "!!! " + hoursAgo + " !!!";
+                hoursAgo = hoursAgo + " (unkn)";
             }
-            hoursAgo += " [" + wordOccurrencesInText + "]";
+            hoursAgo += " [" + wordOccurrencesInText + " times]";
             return hoursAgo;
         }
     }
