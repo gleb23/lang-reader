@@ -24,8 +24,11 @@
 
 ## TO-DO List (in decreasing priority order):
 1. Fix Existing unit-tests. +
-1. Write uni-tests for TextAnalyzer
-1. Simplify methods in TextAnalyzer
+1. Write uni-tests for TextAnalyzer +
+1. Simplify methods in TextAnalyzer +
+1. Load user dictionary at startup and update it after each unknown word is marked or next text quered
+1. Print user dictionary to the web-page instead of log in AddNewWordController:42
 1. Calculate level of knowledge of words
+1. Design and create separate page for displaying information about user dictionary (level, last seen etc.)
 1. Use java 8 time instead of java.util.Date
 1. Automate text adition
