@@ -29,7 +29,7 @@ class TextAnalyzerTest extends GroovyTestCase {
     TextAnalyzer textAnalyzer = new TextAnalyzer();
 
     @Test
-    void getUserDictionary() throws Exception {
+    void calculateUserDictionaryTest() throws Exception {
         Mockito.when(dao.getAllUnknownWordsWithTextViews(1)).thenReturn([dog: [1, 2, 3], cat: [1, 2]])
 
         def textView1 = new TextView(1, 1, new Date(), "text1", null, 0);

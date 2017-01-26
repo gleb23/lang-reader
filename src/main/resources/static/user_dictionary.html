@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User dictionary</title>
+</head>
+<body>
+<div class="dictionary">
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.get("get-dictionary", {"userId": 1}, function(data) {
+            $(".dictionary").append(data);
+        });
+    });
+
+</script>
+</body>
+</html>

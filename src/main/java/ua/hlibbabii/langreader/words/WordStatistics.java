@@ -43,6 +43,22 @@ public class WordStatistics {
         return wordOccurrences.get(wordOccurrences.size() - 1);
     }
 
+    public Optional<KnowledgeRate> getInitialKnowledgeRate() {
+        return initialKnowledgeRate;
+    }
+
+    public void setInitialKnowledgeRate(Optional<KnowledgeRate> initialKnowledgeRate) {
+        this.initialKnowledgeRate = initialKnowledgeRate;
+    }
+
+    public List<WordOccurrence> getWordOccurrences() {
+        return wordOccurrences;
+    }
+
+    public void setWordOccurrences(List<WordOccurrence> wordOccurrences) {
+        this.wordOccurrences = wordOccurrences;
+    }
+
     public double getPercentOfTextsWordAppears() {
         WordOccurrence lastWordOccurrence = getLastWordOccurrence();
         return (double) wordOccurrences.size() / lastWordOccurrence.textNumber;
@@ -75,6 +91,38 @@ public class WordStatistics {
             }
             hoursAgo += " [" + wordOccurrencesInText + " times]";
             return hoursAgo;
+        }
+
+        public String getDateTime() {
+            return dateTime.toString();
+        }
+
+        public void setDateTime(ZonedDateTime dateTime) {
+            this.dateTime = dateTime;
+        }
+
+        public boolean isKnown() {
+            return known;
+        }
+
+        public void setKnown(boolean known) {
+            this.known = known;
+        }
+
+        public int getTextNumber() {
+            return textNumber;
+        }
+
+        public void setTextNumber(int textNumber) {
+            this.textNumber = textNumber;
+        }
+
+        public int getWordOccurrencesInText() {
+            return wordOccurrencesInText;
+        }
+
+        public void setWordOccurrencesInText(int wordOccurrencesInText) {
+            this.wordOccurrencesInText = wordOccurrencesInText;
         }
     }
 }

@@ -30,6 +30,8 @@ public class TextAnalyzer {
     @Autowired
     private TextDataSource textDataSource;
 
+    private Map<Integer, UserDictionary> userDictionaries = new HashMap<>();
+
     public String getNextTextForUser(int userId) {
         TextInfo text = textRating.getFirst(userId);
         return (text != null ? text.getId() : null);
@@ -57,7 +59,16 @@ public class TextAnalyzer {
         return wordsToTextViewsMap;
     }
 
-    public UserDictionary getUserDictionary(int userId) {
+    public synchronized UserDictionary getUserDictionary(int userId) {
+        UserDictionary userDictionary = userDictionaries.get(userId);
+        if (userDictionary == null) {
+            userDictionary = calculateUserDictionary(userId);
+            userDictionaries.put(userId, userDictionary);
+        }
+        return userDictionary;
+    }
+
+    public UserDictionary calculateUserDictionary(int userId) {
         Map<String, List<Integer>> unknownWordsToTextViewsMap = dao.getAllUnknownWordsWithTextViews(userId);
         Map<Integer, TextView> allUserTextViews = dao.getAllTextViewsByUser(userId);
         Map<String, MultiSet<Integer>> allWordsWithTextViewsMap = getWordsFromTextViews(allUserTextViews.values());

@@ -1,10 +1,6 @@
 package ua.hlibbabii.langreader.words;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -20,8 +16,20 @@ public class UserDictionary {
         wordToStatisticsMap.put(wordStatistics.getNormalizedForm(), wordStatistics);
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Map<String, WordStatistics> getWordToStatisticsMap() {
+        return wordToStatisticsMap;
+    }
+
+    public void setWordToStatisticsMap(Map<String, WordStatistics> wordToStatisticsMap) {
+        this.wordToStatisticsMap = wordToStatisticsMap;
     }
 
     @Override

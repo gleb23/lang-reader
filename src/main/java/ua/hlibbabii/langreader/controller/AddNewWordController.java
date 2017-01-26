@@ -39,7 +39,6 @@ public class AddNewWordController {
 
     @RequestMapping(value = "/next", method = RequestMethod.GET)
     public TextView getNextText() {
-        System.out.println(textAnalyzer.getUserDictionary(userId).toStringSortedByFrequency());
         try {
             String textId = textAnalyzer.getNextTextForUser(userId);
             if (textId == null) {
