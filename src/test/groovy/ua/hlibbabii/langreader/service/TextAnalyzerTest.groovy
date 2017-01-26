@@ -35,7 +35,7 @@ class TextAnalyzerTest extends GroovyTestCase {
         def textView1 = new TextView(1, 1, new Date(), "text1", null, 0);
         def textView2 = new TextView(2, 1, new Date(), "text2", null, 0);
         def textView3 = new TextView(3, 1, new Date(), "text3", null, 0);
-        Mockito.when(dao.getAllTextViewsForUser(1)).thenReturn([1: textView1, 2: textView2, 3: textView3])
+        Mockito.when(dao.getAllTextViewsByUser(1)).thenReturn([1: textView1, 2: textView2, 3: textView3])
 
         Mockito.when(textDataSource.getById("text1").allNormilizedWords).thenReturn(["dog", "cat", "text1"])
         Mockito.when(textDataSource.getById("text2").allNormilizedWords).thenReturn(["dog", "cat", "text2"])

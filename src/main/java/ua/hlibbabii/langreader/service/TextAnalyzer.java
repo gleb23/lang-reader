@@ -13,12 +13,7 @@ import ua.hlibbabii.langreader.words.WordStatistics;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hlib on 27.05.16.
@@ -40,46 +35,54 @@ public class TextAnalyzer {
         return (text != null ? text.getId() : null);
     }
 
-    public Map<String, MultiSet<Integer>> getAllWordsWithTextViews(Collection<TextView> allTextViews) {
-        Map<String, MultiSet<Integer>> allWordsWithTextViews = new HashMap<>();
-        for (TextView textView : allTextViews) {
+    /**
+     * Returns the map where the keys are normalized words that can be found in @param{textViews}, values are multisets
+     * of testViewIds that contain the word in the key.
+     */
+    public Map<String, MultiSet<Integer>> getWordsFromTextViews(Collection<TextView> textViews) {
+        Map<String, MultiSet<Integer>> wordsToTextViewsMap = new HashMap<>();
+        for (TextView textView : textViews) {
             int textViewId = textView.getTextViewId();
-            Collection<String> allNormilizedWordsCount = textDataSource.getById(textView.getTextId())
-                                                                       .getAllNormilizedWords();
-            for (String word : allNormilizedWordsCount) {
-                MultiSet<Integer> textViewIdMultiSet = allWordsWithTextViews.get(word);
+            Collection<String> allNormilizedWordsFromText = textDataSource.getById(textView.getTextId())
+                    .getAllNormilizedWords();
+            for (String normalizedWord : allNormilizedWordsFromText) {
+                MultiSet<Integer> textViewIdMultiSet = wordsToTextViewsMap.get(normalizedWord);
                 if (textViewIdMultiSet == null) {
                     textViewIdMultiSet = new HashMultiSet<>();
                 }
                 textViewIdMultiSet.add(textViewId);
-                allWordsWithTextViews.put(word, textViewIdMultiSet);
+                wordsToTextViewsMap.put(normalizedWord, textViewIdMultiSet);
             }
         }
-        return allWordsWithTextViews;
+        return wordsToTextViewsMap;
     }
 
     public UserDictionary getUserDictionary(int userId) {
+        Map<String, List<Integer>> unknownWordsToTextViewsMap = dao.getAllUnknownWordsWithTextViews(userId);
+        Map<Integer, TextView> allUserTextViews = dao.getAllTextViewsByUser(userId);
+        Map<String, MultiSet<Integer>> allWordsWithTextViewsMap = getWordsFromTextViews(allUserTextViews.values());
+
         UserDictionary userDictionary = new UserDictionary();
-        Map<String, List<Integer>> allUnknownWordsWithTextViews = dao.getAllUnknownWordsWithTextViews(userId);
-        Map<Integer, TextView> allTextViews = dao.getAllTextViewsForUser(userId);
-        Map<String, MultiSet<Integer>> allWordsWithTextViews = getAllWordsWithTextViews(allTextViews.values());
-        for (Map.Entry<String, MultiSet<Integer>> wordEntry : allWordsWithTextViews.entrySet()) {
+        for (Map.Entry<String, MultiSet<Integer>> wordEntry : allWordsWithTextViewsMap.entrySet()) {
             String word = wordEntry.getKey();
+            MultiSet<Integer> textViewsWithWord = wordEntry.getValue();
             List<Integer> textViewIdsWithUnknownWord;
-            if (allUnknownWordsWithTextViews.containsKey(word)) {
-                textViewIdsWithUnknownWord = allUnknownWordsWithTextViews.get(word);
+            boolean wordIsUnknown = unknownWordsToTextViewsMap.containsKey(word);
+            if (wordIsUnknown) {
+                textViewIdsWithUnknownWord = unknownWordsToTextViewsMap.get(word);
             } else {
-                textViewIdsWithUnknownWord = new ArrayList<>();
+                textViewIdsWithUnknownWord = Collections.emptyList();
             }
-            MultiSet<Integer> textViewsWithWord = allWordsWithTextViews.get(word);
             WordStatistics wordStatistics = new WordStatistics();
             wordStatistics.setNormalizedForm(word);
             for (Integer textViewId : textViewsWithWord.uniqueSet()) {
-                TextView textView = allTextViews.get(textViewId);
-                wordStatistics.addWordOccurrence(convertDateToZonedDateTime(textView.getDateTime()),
-                        !textViewIdsWithUnknownWord
-                                .contains(textViewId), textView.getTextNumber(), textViewsWithWord.getCount
-                                (textViewId));
+                TextView textView = allUserTextViews.get(textViewId);
+                wordStatistics.addWordOccurrence(
+                        convertDateToZonedDateTime(textView.getDateTime()),
+                        !textViewIdsWithUnknownWord.contains(textViewId),
+                        textView.getTextNumber(),
+                        textViewsWithWord.getCount(textViewId)
+                );
             }
             userDictionary.add(wordStatistics);
         }

@@ -8,11 +8,7 @@ import ua.hlibbabii.langreader.text.TextView;
 
 import javax.annotation.PostConstruct;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -70,7 +66,7 @@ public class Dao {
         return result;
     }
 
-    public Map<Integer, TextView> getAllTextViewsForUser(int userId) {
+    public Map<Integer, TextView> getAllTextViewsByUser(int userId) {
         String sql = "SELECT * from TEXT_VIEW as t where t.userId = ? order by t.datetime";
 
         List<TextView> textViews = jdbcTemplate.query(sql, new Object[]{userId}, new int[]{Types.INTEGER}, (rs,
